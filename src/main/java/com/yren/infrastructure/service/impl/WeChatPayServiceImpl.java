@@ -76,11 +76,10 @@ public class WeChatPayServiceImpl implements WeChatPayService {
         try(CloseableHttpResponse response = wxPayClient.execute(httpPost)) {
             //响应状态码
             int statusCode = response.getStatusLine().getStatusCode();
-            //响应体
-            String respBody = EntityUtils.toString(response.getEntity());
-            log.info("WeChatPayService closeOrder execute result orderNo ->{},code ->{} ,body ->{}",orderNo,statusCode, respBody);
-            if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_NO_CONTENT) {
+            if (statusCode != 200 && statusCode != 204) {
                 throw new RuntimeException("订单关闭异常");
+            } else {
+                log.info("WeChatPayService closeOrder execute result orderNo ->{},code ->{}", orderNo, statusCode);
             }
         } catch (Exception e){
             log.error("WeChatPayService closeOrder execute errorMsg ->{} orderNo -> {}",e.getMessage(),orderNo);

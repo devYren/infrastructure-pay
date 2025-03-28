@@ -108,7 +108,7 @@ public class WeChatPayUtils {
             // 验签和解析请求体
             Notification notification = handler.parse(request);
             log.info("WeChatPayUtils payCallBackSignatureAndDecrypt body plaintext -> {}", notification);
-            return notification.toString();
+            return notification.getDecryptData();
         }catch (Exception e){
             log.error("WeChatPayUtils payCallBackSignatureAndDecrypt errorMsg -> {}",e.getMessage());
             return null;
